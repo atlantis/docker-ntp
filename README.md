@@ -266,13 +266,15 @@ $ docker logs -f ntps
 2021-05-25T18:42:47Z System clock wrong by -2.541034 seconds
 2021-05-25T18:42:47Z Could not step system clock
 ```
-
-Good question! Since `chronyd` is running with the `-x` flag, it will not try to control
+Good question! Since `chronyd` is running with the `-x` flag by default, it will not try to control
 the system (container host) clock. This of course is necessary because the process does not
-have priviledge (for good reason) to modify the clock on the system.
+have priviledge to modify the clock on the system.
 
-Like any host on your network, simply use your preferred ntp client to pull the time from
-the running ntp container on your container host.
-
+If you want `chronyd` to modify the system clock, you need to set the `CHANGE_SYSTEM_CLOCK=true` environment variable and add some container capacities:
+```
+cap_add:
+  - SYS_TIME
+  - SYS_NICE
+```
 ---
 <a href="https://www.buymeacoffee.com/cturra" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-yellow.png" alt="Buy Me A Coffee" height="41" width="174"></a>
