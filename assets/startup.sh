@@ -77,5 +77,12 @@ done
   echo "allow all"
 } >> ${CHRONY_CONF_FILE}
 
+# run with the -x option UNLESS we set an
+if [[ "${CHANGE_SYSTEM_CLOCK}" == "true" || "${CHANGE_SYSTEM_CLOCK}" == "1" ]]; then
+  DYNAMIC_OPTIONS=""
+else
+  DYNAMIC_OPTIONS="-x"
+fi
+
 ## startup chronyd in the foreground
-exec /usr/sbin/chronyd -u chrony -d -x -L ${LOG_LEVEL}
+exec /usr/sbin/chronyd -u chrony -d ${DYNAMIC_OPTIONS} -L ${LOG_LEVEL}
