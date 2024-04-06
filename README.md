@@ -276,5 +276,13 @@ cap_add:
   - SYS_TIME
   - SYS_NICE
 ```
+
+Here's how we built this for multiple platforms:
+```
+docker buildx build --push \
+--platform linux/amd64,linux/arm64 \
+--tag populi/docker-ntp:latest .
+```
 ---
+Original Author Shoutout:
 <a href="https://www.buymeacoffee.com/cturra" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-yellow.png" alt="Buy Me A Coffee" height="41" width="174"></a>
